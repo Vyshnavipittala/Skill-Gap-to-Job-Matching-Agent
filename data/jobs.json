@@ -1,0 +1,403 @@
+[
+  {
+    "id": "job_01",
+    "title": "Backend Python Developer",
+    "company": "Infosys",
+    "city": "Bengaluru",
+    "required_skills": ["Python", "FastAPI", "PostgreSQL", "REST API", "Git"],
+    "nice_to_have_skills": ["Docker", "Redis", "AWS"],
+    "education": "B.Tech in Computer Science or related field",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_02",
+    "title": "Frontend React Engineer",
+    "company": "Swiggy",
+    "city": "Bengaluru",
+    "required_skills": ["React", "JavaScript", "TypeScript", "HTML5", "CSS3"],
+    "nice_to_have_skills": ["Redux", "Tailwind CSS", "Next.js"],
+    "education": "B.Tech / B.E. / BCA / MCA",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_03",
+    "title": "Data Analyst",
+    "company": "Mu Sigma",
+    "city": "Bengaluru",
+    "required_skills": ["SQL", "Python", "Microsoft Excel", "Tableau"],
+    "nice_to_have_skills": ["Power BI", "Statistics", "Pandas"],
+    "education": "Bachelor in Statistics, Mathematics, or Computer Science",
+    "experience_level": "0-2 years"
+  },
+  {
+    "id": "job_04",
+    "title": "Machine Learning Engineer",
+    "company": "Fractal Analytics",
+    "city": "Mumbai",
+    "required_skills": ["Python", "Machine Learning", "Scikit-Learn", "Pandas", "SQL"],
+    "nice_to_have_skills": ["PyTorch", "MLflow", "Docker"],
+    "education": "B.Tech / M.Tech in CS / Data Science",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_05",
+    "title": "DevOps Engineer",
+    "company": "Wipro",
+    "city": "Hyderabad",
+    "required_skills": ["Linux", "Docker", "Kubernetes", "CI/CD", "AWS"],
+    "nice_to_have_skills": ["Terraform", "Python", "Bash Scripting"],
+    "education": "B.Tech in Computer Science or Information Technology",
+    "experience_level": "2-5 years"
+  },
+  {
+    "id": "job_06",
+    "title": "Full Stack Developer",
+    "company": "Zoho",
+    "city": "Chennai",
+    "required_skills": ["JavaScript", "Node.js", "React", "PostgreSQL", "REST API"],
+    "nice_to_have_skills": ["TypeScript", "Docker", "Git"],
+    "education": "B.E. / B.Tech in Engineering",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_07",
+    "title": "Embedded Software Engineer",
+    "company": "Bosch India",
+    "city": "Bengaluru",
+    "required_skills": ["Embedded C", "C++", "Microcontrollers", "RTOS", "Git"],
+    "nice_to_have_skills": ["ARM Architecture", "CAN Protocol", "Linux"],
+    "education": "B.Tech in Electronics and Communication or Electrical",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_08",
+    "title": "IoT Systems Developer",
+    "company": "Tata Elxsi",
+    "city": "Pune",
+    "required_skills": ["IoT", "Embedded C", "Python", "Microcontrollers", "MQTT"],
+    "nice_to_have_skills": ["FreeRTOS", "AWS", "Raspberry Pi"],
+    "education": "B.Tech in Electronics or Computer Engineering",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_09",
+    "title": "VLSI Verification Engineer",
+    "company": "Qualcomm",
+    "city": "Hyderabad",
+    "required_skills": ["SystemVerilog", "Verilog", "VLSI Design", "Digital Electronics"],
+    "nice_to_have_skills": ["UVM", "Python", "Perl"],
+    "education": "B.Tech / M.Tech in VLSI or Electronics",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_10",
+    "title": "Hardware PCB Design Engineer",
+    "company": "L&T Technology Services",
+    "city": "Mysuru",
+    "required_skills": ["PCB Design", "Altium Designer", "Circuit Simulation", "Digital Electronics"],
+    "nice_to_have_skills": ["EMI/EMC", "Microcontrollers", "Soldering"],
+    "education": "B.Tech in Electrical or Electronics Engineering",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_11",
+    "title": "Mechanical Design Engineer",
+    "company": "Tata Motors",
+    "city": "Pune",
+    "required_skills": ["SolidWorks", "AutoCAD", "CAD", "Engineering Drawings", "GD&T"],
+    "nice_to_have_skills": ["CATIA", "Finite Element Analysis", "Sheet Metal"],
+    "education": "B.Tech / B.E. in Mechanical Engineering",
+    "experience_level": "1-4 years"
+  },
+  {
+    "id": "job_12",
+    "title": "CAE FEA Simulation Engineer",
+    "company": "Mahindra & Mahindra",
+    "city": "Chennai",
+    "required_skills": ["ANSYS", "Finite Element Analysis", "SolidWorks", "Structural Analysis"],
+    "nice_to_have_skills": ["HyperMesh", "MATLAB", "Python"],
+    "education": "B.Tech / M.Tech in Mechanical Engineering",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_13",
+    "title": "Production and Quality Engineer",
+    "company": "Bharat Forge",
+    "city": "Pune",
+    "required_skills": ["Six Sigma", "Lean Manufacturing", "Quality Control", "Microsoft Excel"],
+    "nice_to_have_skills": ["AutoCAD", "Root Cause Analysis", "ISO 9001"],
+    "education": "B.Tech in Mechanical or Production Engineering",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_14",
+    "title": "Business Analyst",
+    "company": "Deloitte India",
+    "city": "Hyderabad",
+    "required_skills": ["Business Analysis", "SQL", "Microsoft Excel", "Agile Methodology", "Requirements Gathering"],
+    "nice_to_have_skills": ["Power BI", "Jira", "Tableau"],
+    "education": "Bachelor in Business, Engineering, or Computer Applications",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_15",
+    "title": "Associate Product Manager",
+    "company": "Razorpay",
+    "city": "Bengaluru",
+    "required_skills": ["Product Management", "Data Analysis", "Agile Methodology", "Wireframing", "User Research"],
+    "nice_to_have_skills": ["SQL", "Jira", "Figma"],
+    "education": "B.Tech or MBA / BBA",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_16",
+    "title": "UI UX Designer",
+    "company": "Flipkart",
+    "city": "Bengaluru",
+    "required_skills": ["Figma", "UI/UX Design", "Wireframing", "Prototyping", "User Research"],
+    "nice_to_have_skills": ["Adobe XD", "Design Systems", "HTML5"],
+    "education": "Degree in Design, Fine Arts, or HCI",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_17",
+    "title": "Junior Data Scientist",
+    "company": "TCS",
+    "city": "Delhi NCR",
+    "required_skills": ["Python", "Machine Learning", "Pandas", "NumPy", "Statistics"],
+    "nice_to_have_skills": ["Deep Learning", "SQL", "Scikit-Learn"],
+    "education": "B.Tech / M.Sc in Data Science, Statistics, or Computer Science",
+    "experience_level": "0-2 years"
+  },
+  {
+    "id": "job_18",
+    "title": "Cloud Data Engineer",
+    "company": "Cognizant",
+    "city": "Chennai",
+    "required_skills": ["SQL", "Python", "Apache Spark", "Data Warehousing", "AWS"],
+    "nice_to_have_skills": ["Snowflake", "Apache Airflow", "Kafka"],
+    "education": "B.Tech in Computer Science or Information Technology",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_19",
+    "title": "Android Application Developer",
+    "company": "Paytm",
+    "city": "Delhi NCR",
+    "required_skills": ["Kotlin", "Android Development", "Java", "REST API", "Git"],
+    "nice_to_have_skills": ["Jetpack Compose", "Coroutines", "Firebase"],
+    "education": "B.Tech / B.E. / MCA",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_20",
+    "title": "Flutter Cross Platform Developer",
+    "company": "Groww",
+    "city": "Bengaluru",
+    "required_skills": ["Flutter", "Dart", "REST API", "Git", "State Management"],
+    "nice_to_have_skills": ["Firebase", "Android Development", "iOS Development"],
+    "education": "B.Tech / BCA / MCA",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_21",
+    "title": "Java Backend Engineer",
+    "company": "Capgemini",
+    "city": "Mumbai",
+    "required_skills": ["Java", "Spring Boot", "REST API", "SQL", "Git"],
+    "nice_to_have_skills": ["Microservices", "Docker", "Hibernate"],
+    "education": "B.Tech in Computer Science or IT",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_22",
+    "title": "PLC SCADA Automation Engineer",
+    "company": "Siemens India",
+    "city": "Pune",
+    "required_skills": ["PLC Programming", "SCADA", "Industrial Automation", "Electrical Schematics"],
+    "nice_to_have_skills": ["HMI Programming", "Modbus", "AutoCAD"],
+    "education": "B.Tech in Electrical, Electronics, or Instrumentation",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_23",
+    "title": "Thermal and CFD Engineer",
+    "company": "Thermax",
+    "city": "Pune",
+    "required_skills": ["ANSYS", "Heat Transfer", "Thermodynamics", "CAD"],
+    "nice_to_have_skills": ["MATLAB", "CFD Fluent", "SolidWorks"],
+    "education": "B.Tech / M.Tech in Mechanical or Chemical Engineering",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_24",
+    "title": "Robotics Firmware Developer",
+    "company": "GreyOrange",
+    "city": "Delhi NCR",
+    "required_skills": ["C++", "ROS", "Embedded C", "Linux", "Microcontrollers"],
+    "nice_to_have_skills": ["Python", "Kinematics", "Git"],
+    "education": "B.Tech in Mechatronics, Robotics, or Electrical",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_25",
+    "title": "FPGA Design and Synthesis Engineer",
+    "company": "HCL Technologies",
+    "city": "Delhi NCR",
+    "required_skills": ["VHDL", "Verilog", "FPGA", "Digital Electronics"],
+    "nice_to_have_skills": ["Xilinx Vivado", "SystemVerilog", "C++"],
+    "education": "B.Tech / M.Tech in ECE or VLSI",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_26",
+    "title": "Business Intelligence BI Engineer",
+    "company": "Amazon India",
+    "city": "Hyderabad",
+    "required_skills": ["SQL", "Power BI", "Data Modeling", "Data Analysis"],
+    "nice_to_have_skills": ["Python", "Tableau", "AWS"],
+    "education": "Bachelor's in Computer Science, Math, or Engineering",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_27",
+    "title": "Supply Chain Operations Analyst",
+    "company": "Reliance Retail",
+    "city": "Mumbai",
+    "required_skills": ["Supply Chain Management", "Microsoft Excel", "Data Analysis", "Inventory Management"],
+    "nice_to_have_skills": ["SQL", "ERP Systems", "Power BI"],
+    "education": "Degree in Supply Chain, Commerce, or Engineering",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_28",
+    "title": "Digital Marketing Specialist",
+    "company": "Zomato",
+    "city": "Delhi NCR",
+    "required_skills": ["Digital Marketing", "SEO", "Google Analytics", "Content Strategy"],
+    "nice_to_have_skills": ["SEM", "Social Media Marketing", "Copywriting"],
+    "education": "Bachelor in Marketing, Communications, or Business",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_29",
+    "title": "Product Visual Designer",
+    "company": "PhonePe",
+    "city": "Bengaluru",
+    "required_skills": ["Figma", "Graphic Design", "Typography", "Color Theory", "Prototyping"],
+    "nice_to_have_skills": ["Illustration", "Design Systems", "Motion Graphics"],
+    "education": "Degree or Diploma in Graphic/Visual Design",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_30",
+    "title": "QA Automation Test Engineer",
+    "company": "Mindtree",
+    "city": "Bengaluru",
+    "required_skills": ["Selenium", "Java", "TestNG", "Git", "REST API"],
+    "nice_to_have_skills": ["Python", "Jenkins", "Cucumber"],
+    "education": "B.Tech / MCA in Computer Science",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_31",
+    "title": "Deep Learning Computer Vision Engineer",
+    "company": "Ola Electric",
+    "city": "Bengaluru",
+    "required_skills": ["Python", "Computer Vision", "Deep Learning", "PyTorch", "OpenCV"],
+    "nice_to_have_skills": ["TensorFlow", "C++", "Docker"],
+    "education": "M.Tech / B.Tech in CS or AI",
+    "experience_level": "2-5 years"
+  },
+  {
+    "id": "job_32",
+    "title": "Cloud Solutions Architect",
+    "company": "Accenture",
+    "city": "Hyderabad",
+    "required_skills": ["AWS", "Cloud Architecture", "Docker", "Microservices", "Terraform"],
+    "nice_to_have_skills": ["Kubernetes", "Linux", "Python"],
+    "education": "B.Tech / M.Tech in Engineering",
+    "experience_level": "3-6 years"
+  },
+  {
+    "id": "job_33",
+    "title": "Automotive CAD Design Engineer",
+    "company": "Hero MotoCorp",
+    "city": "Delhi NCR",
+    "required_skills": ["AutoCAD", "CATIA", "SolidWorks", "Mechanical Design"],
+    "nice_to_have_skills": ["GD&T", "Automotive Systems", "DFM"],
+    "education": "B.Tech in Mechanical or Automobile Engineering",
+    "experience_level": "1-4 years"
+  },
+  {
+    "id": "job_34",
+    "title": "Natural Language Processing Engineer",
+    "company": "Jio Platforms",
+    "city": "Mumbai",
+    "required_skills": ["Python", "Natural Language Processing", "Transformers", "Machine Learning", "PyTorch"],
+    "nice_to_have_skills": ["Hugging Face", "Generative AI", "Docker"],
+    "education": "B.Tech / M.Tech in CS / AI",
+    "experience_level": "2-4 years"
+  },
+  {
+    "id": "job_35",
+    "title": "Site Reliability Engineer SRE",
+    "company": "Freshworks",
+    "city": "Chennai",
+    "required_skills": ["Linux", "Python", "Kubernetes", "Docker", "Monitoring"],
+    "nice_to_have_skills": ["Prometheus", "Terraform", "AWS"],
+    "education": "B.Tech in Computer Science or IT",
+    "experience_level": "2-5 years"
+  },
+  {
+    "id": "job_36",
+    "title": "Industrial Automation Technician",
+    "company": "ABB India",
+    "city": "Bengaluru",
+    "required_skills": ["PLC Programming", "Wiring", "SCADA", "Electrical Maintenance"],
+    "nice_to_have_skills": ["Safety Standards", "Sensors", "Troubleshooting"],
+    "education": "Diploma / ITI in Electrical or Electronics",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_37",
+    "title": "Operations & Logistics Coordinator",
+    "company": "Delhivery",
+    "city": "Delhi NCR",
+    "required_skills": ["Logistics Management", "Microsoft Excel", "Vendor Coordination", "Data Entry"],
+    "nice_to_have_skills": ["Supply Chain Management", "Warehouse Management", "SQL"],
+    "education": "Graduate in Commerce, Arts, or Science",
+    "experience_level": "0-2 years"
+  },
+  {
+    "id": "job_38",
+    "title": "Solar Energy Systems Engineer",
+    "company": "Tata Power Solar",
+    "city": "Bengaluru",
+    "required_skills": ["Solar PV", "Electrical Systems", "AutoCAD", "Site Inspection"],
+    "nice_to_have_skills": ["Energy Auditing", "Project Management", "PVsyst"],
+    "education": "B.Tech or Diploma in Electrical or Renewable Energy",
+    "experience_level": "1-3 years"
+  },
+  {
+    "id": "job_39",
+    "title": "CNC Machine Programmer & Operator",
+    "company": "Godrej & Boyce",
+    "city": "Mumbai",
+    "required_skills": ["CNC Programming", "G-Code", "Milling", "Blueprint Reading"],
+    "nice_to_have_skills": ["CAD", "Quality Inspection", "Tooling"],
+    "education": "ITI / Diploma in Mechanical or Machinist Trade",
+    "experience_level": "1-4 years"
+  },
+  {
+    "id": "job_40",
+    "title": "Scrum Master & Agile Project Coordinator",
+    "company": "Tech Mahindra",
+    "city": "Pune",
+    "required_skills": ["Agile Methodology", "Scrum", "Jira", "Sprint Planning", "Communication"],
+    "nice_to_have_skills": ["Kanban", "Confluence", "Software Development Lifecycle"],
+    "education": "Bachelor's degree in any discipline",
+    "experience_level": "2-5 years"
+  }
+]
+

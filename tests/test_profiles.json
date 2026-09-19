@@ -1,0 +1,93 @@
+[
+  {
+    "id": "profile_01",
+    "name": "Aarav Sharma",
+    "domain": "Software Backend",
+    "experience_years": 2,
+    "location": "Bengaluru",
+    "skills": ["Python", "FastAPI", "PostgreSQL", "REST API", "Git"],
+    "expected_top_3_jobs": ["job_01", "job_06", "job_30"]
+  },
+  {
+    "id": "profile_02",
+    "name": "Priya Patel",
+    "domain": "Frontend Web",
+    "experience_years": 3,
+    "location": "Bengaluru",
+    "skills": ["React", "JavaScript", "TypeScript", "HTML5", "CSS3"],
+    "expected_top_3_jobs": ["job_02", "job_06", "job_16"]
+  },
+  {
+    "id": "profile_03",
+    "name": "Rohan Deshmukh",
+    "domain": "Data Analytics",
+    "experience_years": 1,
+    "location": "Bengaluru",
+    "skills": ["SQL", "Python", "Microsoft Excel", "Tableau", "Power BI"],
+    "expected_top_3_jobs": ["job_03", "job_26", "job_14"]
+  },
+  {
+    "id": "profile_04",
+    "name": "Ananya Sen",
+    "domain": "Machine Learning",
+    "experience_years": 3,
+    "location": "Mumbai",
+    "skills": ["Python", "Machine Learning", "Scikit-Learn", "Pandas", "SQL"],
+    "expected_top_3_jobs": ["job_04", "job_17", "job_31"]
+  },
+  {
+    "id": "profile_05",
+    "name": "Vikram Reddy",
+    "domain": "DevOps & Cloud",
+    "experience_years": 4,
+    "location": "Hyderabad",
+    "skills": ["Linux", "Docker", "Kubernetes", "CI/CD", "AWS"],
+    "expected_top_3_jobs": ["job_05", "job_35", "job_32"]
+  },
+  {
+    "id": "profile_06",
+    "name": "Karthik Nair",
+    "domain": "Embedded Systems",
+    "experience_years": 2,
+    "location": "Bengaluru",
+    "skills": ["Embedded C", "C++", "Microcontrollers", "RTOS", "Git"],
+    "expected_top_3_jobs": ["job_07", "job_08", "job_24"]
+  },
+  {
+    "id": "profile_07",
+    "name": "Meera Krishnan",
+    "domain": "VLSI & Hardware",
+    "experience_years": 3,
+    "location": "Hyderabad",
+    "skills": ["SystemVerilog", "Verilog", "VLSI Design", "Digital Electronics"],
+    "expected_top_3_jobs": ["job_09", "job_25", "job_10"]
+  },
+  {
+    "id": "profile_08",
+    "name": "Aditya Kulkarni",
+    "domain": "Mechanical Design",
+    "experience_years": 2,
+    "location": "Pune",
+    "skills": ["SolidWorks", "AutoCAD", "CAD", "Engineering Drawings", "GD&T"],
+    "expected_top_3_jobs": ["job_11", "job_33", "job_12"]
+  },
+  {
+    "id": "profile_09",
+    "name": "Suresh Verma",
+    "domain": "Industrial Automation",
+    "experience_years": 2,
+    "location": "Pune",
+    "skills": ["PLC Programming", "SCADA", "Industrial Automation", "Electrical Schematics"],
+    "expected_top_3_jobs": ["job_22", "job_36", "job_10"]
+  },
+  {
+    "id": "profile_10",
+    "name": "Tanvi Joshi",
+    "domain": "UI/UX Design",
+    "experience_years": 2,
+    "location": "Bengaluru",
+    "skills": ["Figma", "UI/UX Design", "Wireframing", "Prototyping", "User Research"],
+    "expected_top_3_jobs": ["job_16", "job_29", "job_15"]
+  }
+]
+
