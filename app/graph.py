@@ -45,8 +45,30 @@ def node_match_jobs(state: AgentState) -> Dict[str, Any]:
     skills = profile.get("skills", [])
     location = state.get("selected_location") or profile.get("location", "Any Location")
     try:
-        matched = match_jobs(user_skills=skills, user_location=location, top_n=10)
-        return {"matched_jobs": matched}
+        pool = match_jobs(user_skills=skills, user_location=location, top_n=50)
+
+        strong = [j for j in pool if j.get("match_score", 0) >= 70][:5]
+        strong_ids = {j.get("job_id") for j in strong}
+
+        stretch_pool = [
+            j for j in pool
+            if j.get("job_id") not in strong_ids and 30 <= j.get("match_score", 0) < 70
+        ]
+        stretch_pool.sort(key=lambda j: len(j.get("missing_required", [])))
+        stretch = stretch_pool[:5]
+
+        for j in strong:
+            j["match_tier"] = "strong"
+        for j in stretch:
+            j["match_tier"] = "stretch"
+
+        curated = strong + stretch
+        if not curated:
+            curated = pool[:10]
+            for j in curated:
+                j.setdefault("match_tier", "strong" if j.get("match_score", 0) >= 70 else "stretch")
+
+        return {"matched_jobs": curated}
     except Exception as e:
         return {"error": f"Job matching error: {str(e)}"}
 

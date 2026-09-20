@@ -66,6 +66,7 @@ def parse_profile(raw_text="", file_bytes=None, file_name=None, override_locatio
         profile = extract_profile_from_multimodal(image_bytes, image_mime_type, text_context=combined_text)
     else:
         profile = extract_profile_with_llm(combined_text)
+        profile.setdefault("extraction_ok", True)
 
     synonyms_map = load_taxonomy()
     profile["skills"] = normalize_skills(profile.get("skills", []), synonyms_map)
