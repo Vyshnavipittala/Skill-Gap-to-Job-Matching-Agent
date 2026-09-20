@@ -2,7 +2,7 @@ import os
 import streamlit as st
 import pandas as pd
 from app.graph import run_skill_gap_pipeline
-
+from app.simulator_ui import render_simulator, render_weekly_outlook, reset_simulator_state
 st.set_page_config(
     page_title="Skill-Gap-to-Job Matching Agent",
     page_icon="🎯",
@@ -332,17 +332,27 @@ with right_col:
                 st.error(result["error"])
             else:
                 st.session_state["result"] = result
+                reset_simulator_state()
 
     if "result" in st.session_state:
         res = st.session_state["result"]
         profile = res.get("user_profile", {})
         matched_jobs = res.get("matched_jobs", [])
+
+        if profile.get("extraction_ok") is False:
+            st.error(
+                "⚠️ Could not read this input automatically, so the analysis below is based on "
+                "a blank profile and is not meaningful. "
+                f"Reason: {profile.get('extraction_error', 'unknown error')}\n\n"
+                "Try the **Document (PDF/TXT)** tab instead, or paste the resume text directly "
+                "under **Free Text** — both are far more reliable than image/voice scanning."
+            )
         gap_data = res.get("gap_analysis", {})
         rec_data = res.get("recommendations", {})
 
         top_score = matched_jobs[0]["match_score"] if matched_jobs else 0.0
         top_role = matched_jobs[0]["title"] if matched_jobs else "N/A"
-
+        
         st.markdown(f"""
         <div class="hero-card">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
@@ -372,11 +382,12 @@ with right_col:
 
         st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
 
-        tab_profile, tab_matches, tab_gaps, tab_training = st.tabs([
+        tab_profile, tab_matches, tab_gaps, tab_training, tab_simulator = st.tabs([
             "👤 Candidate Profile",
             "💼 Job Matches",
             "🔍 Skill Gap Analysis",
-            "🚀 Training Roadmap"
+            "🚀 Training Roadmap",
+            "🧪 Career Simulator"
         ])
 
         with tab_profile:
@@ -395,11 +406,12 @@ with right_col:
                     st.markdown(f"- **{item}**")
 
         with tab_matches:
-            st.markdown("#### 🏆 Ranked Job Opportunities")
-            for idx, job in enumerate(matched_jobs[:5], 1):
+            strong_jobs = [j for j in matched_jobs if j.get("match_tier") == "strong"]
+            stretch_jobs = [j for j in matched_jobs if j.get("match_tier") == "stretch"]
+
+            def render_job_card(idx, job):
                 score = job.get("match_score", 0.0)
                 score_color = "#10b981" if score >= 70 else ("#f59e0b" if score >= 50 else "#ef4444")
-
                 with st.container():
                     st.markdown(f"""
                     <div class="job-card">
@@ -417,15 +429,35 @@ with right_col:
                     </div>
                     """, unsafe_allow_html=True)
                     st.progress(min(1.0, score / 100.0))
+                    missing = job.get("missing_required", [])
+                    if missing:
+                        st.caption("📚 Learn to qualify: " + ", ".join(missing))
+
+            st.markdown("#### 🏆 Strong Matches — you qualify now")
+            if strong_jobs:
+                for idx, job in enumerate(strong_jobs, 1):
+                    render_job_card(idx, job)
+            else:
+                st.info("No roles at 70%+ yet. See Stretch Roles below for what to learn next.")
+
+            st.markdown("---")
+            st.markdown("#### 🎯 Stretch Roles — learn a few skills to qualify")
+            st.caption("These roles are within reach: close the listed gaps and they become strong matches.")
+            if stretch_jobs:
+                for idx, job in enumerate(stretch_jobs, 1):
+                    render_job_card(idx, job)
+            else:
+                st.info("No stretch roles found in this range. Try the Career Simulator to explore learning paths.")
 
             if len(matched_jobs) > 5:
-                with st.expander("View All 10 Matched Jobs in Tabular View"):
+                with st.expander("View All Matched Jobs in Tabular View"):
                     df_jobs = pd.DataFrame([
                         {
                             "Rank": i,
                             "Role": j.get("title"),
                             "Company": j.get("company"),
                             "Location": j.get("city"),
+                            "Tier": j.get("match_tier", ""),
                             "Score (%)": j.get("match_score"),
                             "Matched Required": ", ".join(j.get("matched_required", [])),
                             "Missing Required": ", ".join(j.get("missing_required", []))
@@ -469,7 +501,9 @@ with right_col:
                             chips = "".join([f'<span class="badge-missing">{s}</span>' for s in missing])
                             st.markdown(chips, unsafe_allow_html=True)
                         else:
-                            st.caption("No missing required skills!")
+                            st.caption("No missing required skills!")                 
+            st.markdown("---")
+            render_weekly_outlook(res)
 
         with tab_training:
             st.markdown("#### 📈 Priority Training Roadmap")
@@ -540,6 +574,8 @@ with right_col:
                             st.dataframe(pd.DataFrame(gain_rows), use_container_width=True, hide_index=True)
             else:
                 st.info("No urgent training gaps identified for current profile matches.")
+        with tab_simulator:
+            render_simulator(res)
     else:
         st.markdown("""
         <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:16px; padding:3rem 2rem; text-align:center;">
