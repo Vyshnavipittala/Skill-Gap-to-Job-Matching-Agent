@@ -4,9 +4,27 @@ import re
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from app.config import GEMINI_MODEL_NAME
+import time
+from app.config import GEMINI_MODEL_NAME, GEMINI_FALLBACK_MODELS
 
 load_dotenv()
+
+MODEL_CHAIN = [GEMINI_MODEL_NAME] + [m for m in GEMINI_FALLBACK_MODELS if m != GEMINI_MODEL_NAME]
+
+def generate_with_retry(client, contents, config=None):
+    last_error = None
+    for model in MODEL_CHAIN:
+        for attempt in range(3):
+            try:
+                return client.models.generate_content(model=model, contents=contents, config=config)
+            except Exception as exc:
+                last_error = exc
+                msg = str(exc)
+                if "503" in msg or "UNAVAILABLE" in msg or "429" in msg or "RESOURCE_EXHAUSTED" in msg:
+                    time.sleep(2 ** attempt)
+                    continue
+                break
+    raise last_error
 
 def get_gemini_client():
     api_key = os.getenv("GEMINI_API_KEY")
@@ -98,10 +116,10 @@ Return only valid JSON.
 """
 
     try:
-        response = client.models.generate_content(
-            model=GEMINI_MODEL_NAME,
-            contents=prompt,
-            config=types.GenerateContentConfig(
+        response = generate_with_retry(
+            client,
+            prompt,
+            types.GenerateContentConfig(
                 response_mime_type="application/json"
             )
         )
@@ -121,8 +139,13 @@ def extract_profile_from_multimodal(media_bytes, mime_type, text_context=""):
     client = get_gemini_client()
     if not client:
         if text_context:
-            return fallback_extract_profile(text_context)
+            fallback = fallback_extract_profile(text_context)
+            fallback["extraction_ok"] = False
+            fallback["extraction_error"] = "GEMINI_API_KEY not set; image/audio reading needs Gemini."
+            return fallback
         return {
+            "extraction_ok": False,
+            "extraction_error": "GEMINI_API_KEY not set; image/audio reading needs Gemini.",
             "name": "Candidate",
             "education": "Not specified",
             "skills": [],
@@ -153,15 +176,15 @@ Return only valid JSON.
 """
 
     try:
-        response = client.models.generate_content(
-            model=GEMINI_MODEL_NAME,
-            contents=[part, prompt],
-            config=types.GenerateContentConfig(
+        response = generate_with_retry(
+            client,
+            [part, prompt],
+            types.GenerateContentConfig(
                 response_mime_type="application/json"
             )
         )
         parsed = json.loads(clean_json_text(response.text))
-        return {
+        result = {
             "name": str(parsed.get("name", "Candidate")),
             "education": str(parsed.get("education", "Not specified")),
             "skills": [str(s) for s in parsed.get("skills", [])],
@@ -169,10 +192,18 @@ Return only valid JSON.
             "location": str(parsed.get("location", "Any Location")),
             "interests": [str(i) for i in parsed.get("interests", [])]
         }
-    except Exception:
+        result["extraction_ok"] = True
+        return result
+    except Exception as exc:
+        print(f"[extract_profile_from_multimodal] Gemini call failed: {exc}")
         if text_context:
-            return fallback_extract_profile(text_context)
+            fallback = fallback_extract_profile(text_context)
+            fallback["extraction_ok"] = False
+            fallback["extraction_error"] = str(exc)
+            return fallback
         return {
+            "extraction_ok": False,
+            "extraction_error": str(exc),
             "name": "Candidate",
             "education": "Not specified",
             "skills": [],
@@ -208,10 +239,44 @@ Rules:
 """
 
     try:
-        response = client.models.generate_content(
-            model=GEMINI_MODEL_NAME,
-            contents=prompt
-        )
+        response = generate_with_retry(client, prompt)
         return response.text.strip()
     except Exception:
         return f"The candidate matches {matched_str} for the {job_title} role at {company}, but is missing {missing_str}. Focusing on {missing_str} will close the critical gaps for this role."
+def generate_scenario_summary(scenario):
+    client = get_gemini_client()
+    if not client:
+        return None
+
+    before = scenario["before"]
+    after = scenario["after"]
+    skills = ", ".join(scenario["skills_learned"]) if scenario["skills_learned"] else "None"
+    unlocked_titles = ", ".join(f"{j['title']} at {j['company']}" for j in scenario["unlocked_jobs"][:5]) or "None"
+    gap_lines = "; ".join(
+        f"{c['title']} at {c['company']}: closes {', '.join(c['closed_required'] + c['closed_nice']) or 'no listed gap'}, still missing {', '.join(c['still_missing_required']) or 'nothing required'}"
+        for c in scenario.get("job_changes", [])[:3]
+    ) or "None"
+    demand = "; ".join(f"{skill} is missing in {count} of {scenario.get('jobs_analysed', 0)} jobs" for skill, count in scenario.get("skill_demand", {}).items()) or "None"
+
+    prompt = f"""
+Write a short, plain-language 2 to 3 sentence summary of this learning scenario for a job seeker.
+Skills to learn: {skills}
+Strong job matches: {before['strong_matches']} before, {after['strong_matches']} after
+Possible roles: {before['possible_roles']} before, {after['possible_roles']} after
+Average required-skill coverage: {before['avg_coverage']}% before, {after['avg_coverage']}% after
+Learning time: {scenario['weeks']} weeks at {scenario['hours_per_week']} hours per week
+Estimated learning cost: Rs. {scenario['cost_inr']}
+Newly unlocked jobs: {unlocked_titles}
+Skill demand: {demand}
+Gap closure per job: {gap_lines}
+
+Rules:
+1. Use ONLY the numbers and names given above. Do NOT calculate, change, or invent any number, skill, or job.
+2. Keep it to 2 or 3 sentences in a helpful, encouraging tone.
+"""
+
+    try:
+        response = generate_with_retry(client, prompt)
+        return response.text.strip()
+    except Exception:
+        return None
