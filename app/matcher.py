@@ -6,6 +6,7 @@ from app.config import (
     EMBEDDING_MODEL_NAME,
     SIMILARITY_THRESHOLD,
     PARTIAL_THRESHOLD,
+    PARTIAL_CREDIT,
     REQUIRED_WEIGHT,
     NICE_TO_HAVE_WEIGHT
 )
@@ -80,12 +81,14 @@ def calculate_job_score(user_skills, job, sim_threshold=SIMILARITY_THRESHOLD, pa
     )
 
     if req_skills:
-        req_score = (len(matched_req) / len(req_skills)) * (REQUIRED_WEIGHT * 100)
+        req_credit = len(matched_req) + PARTIAL_CREDIT * len(partial_req)
+        req_score = (req_credit / len(req_skills)) * (REQUIRED_WEIGHT * 100)
     else:
         req_score = REQUIRED_WEIGHT * 100
 
     if nice_skills:
-        nice_score = (len(matched_nice) / len(nice_skills)) * (NICE_TO_HAVE_WEIGHT * 100)
+        nice_credit = len(matched_nice) + PARTIAL_CREDIT * len(partial_nice)
+        nice_score = (nice_credit / len(nice_skills)) * (NICE_TO_HAVE_WEIGHT * 100)
     else:
         nice_score = NICE_TO_HAVE_WEIGHT * 100
 
@@ -128,4 +131,3 @@ def match_jobs(user_skills, user_location="Any Location", top_n=10, jobs_path=JO
 
     results.sort(key=lambda x: x["match_score"], reverse=True)
     return results[:top_n]
-
