@@ -9,6 +9,7 @@
 ![LangGraph](https://img.shields.io/badge/Pipeline-LangGraph-1C3C3C)
 ![Gemini](https://img.shields.io/badge/LLM-Gemini-4285F4?logo=google&logoColor=white)
 ![Jobs](https://img.shields.io/badge/Jobs-Live%20from%20Adzuna-2EA44F)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Open%20App-FF4B4B?logo=streamlit&logoColor=white)](https://skill-gap-to-job-matching-agent-30-31-60.streamlit.app)
 
 </div>
 
