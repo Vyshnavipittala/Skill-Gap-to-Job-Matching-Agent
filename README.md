@@ -1,144 +1,156 @@
-# Skill-Gap-to-Job Matching Agent
+<div align="center">
 
-An intelligent, multi-agent AI system built with **LangGraph**, **Sentence-Transformers**, and the **Gemini API** that evaluates job seeker profiles, matches them against local job opportunities, pinpoints precise skill gaps, and formulates an ROI-ranked training path.
+# 🎯 Skill-Gap-to-Job Matching Agent
 
----
+**Tell it who you are. It tells you which jobs fit, what's missing, and exactly what to learn next.**
 
-> [!NOTE]
-> **SAMPLE DATA NOTICE**: The postings in `data/jobs.json` are curated realistic sample postings across software, data, embedded/IoT, electronics, mechanical, business, and design across major Indian cities (Bengaluru, Hyderabad, Pune, Mumbai, Chennai, Delhi NCR). You can easily replace `data/jobs.json` with your own real postings as long as the JSON schema (`id`, `title`, `company`, `city`, `required_skills`, `nice_to_have_skills`, `education`, `experience_level`) is preserved.
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white)
+![LangGraph](https://img.shields.io/badge/Pipeline-LangGraph-1C3C3C)
+![Gemini](https://img.shields.io/badge/LLM-Gemini-4285F4?logo=google&logoColor=white)
+![Jobs](https://img.shields.io/badge/Jobs-Live%20from%20Adzuna-2EA44F)
 
----
-
-## Key Features
-
-1. **Profile Parsing Agent**:
-   - Accepts free text, pasted resumes, or uploaded PDF/TXT files.
-   - Leverages Gemini LLM to extract candidate metadata: Name, Education, Skills, Years of Experience, Location, and Career Interests.
-   - Normalizes skills using a comprehensive synonym dictionary (`data/skills_taxonomy.json`) (e.g. `JS` -> `JavaScript`, `ML` -> `Machine Learning`, `K8s` -> `Kubernetes`).
-
-2. **Job Matching Agent**:
-   - Uses `sentence-transformers` (`all-MiniLM-L6-v2`) to embed candidate skills and job requirements.
-   - Computes cosine similarity matching:
-     - Similarity threshold >= 0.65 counts as a match.
-     - Weighted scoring: **80% for required skills**, **20% for nice-to-have skills** (Score: 0 to 100).
-   - Filters by user's location with an "Any Location" option.
-   - Returns the Top 10 matching jobs.
-
-3. **Gap Analysis Agent**:
-   - For every top job, precisely categorizes skills into:
-     - **Matched** (>= 0.65)
-     - **Partially Matched** (0.45 <= score < 0.65)
-     - **Missing Required** (< 0.45)
-   - Uses Gemini LLM to generate concise, strictly factual 2-3 sentence assessments per job based solely on computed data.
-
-4. **Training Recommendation & ROI Ranking Agent**:
-   - Maps missing skills to 40+ verified courses from **NPTEL**, **Coursera**, and **Skill India Digital Hub** (`data/courses.json`).
-   - Simulates skill acquisition and calculates the **Opportunity Unlocked**:
-     - Number of top jobs that cross into strong match status (score > 70%).
-     - Average match score gain across top jobs.
-   - Ranks courses by unlocked jobs, score gain, and duration.
-   - Generates a 1-line ROI justification per course and a recommended sequential learning roadmap.
-
-5. **Streamlit Interactive UI**:
-   - 2-column dashboard: profile input & resume upload on the left, tabbed results on the right.
-   - Four dedicated tabs: **Parsed Profile**, **Job Matches**, **Gap Analysis**, and **Training Path**.
+</div>
 
 ---
 
-## Project Structure
+## ✨ What It Does
+
+Most job seekers know they want a job, but not **why they aren't getting shortlisted** or **what to learn to fix it**. This agent answers both.
+
+Give it your profile in any form: **type it, speak it, upload a PDF, or snap a photo of your resume**. In seconds you get:
+
+- 💼 The **top 10 jobs** that fit you, scored from 0 to 100
+- 🔍 A **skill-by-skill gap report** for every job
+- 🚀 An **ROI-ranked training roadmap** with real courses (NPTEL, Coursera, Skill India)
+- 🧪 A **career simulator** that shows how many jobs you unlock if you learn a skill, before you spend a single hour
+
+---
+
+## 🧠 How It Works
+
+```mermaid
+flowchart LR
+    A["🎤 Text / Voice / PDF / Image"] --> B["👤 Profile Agent"]
+    B --> C["💼 Job Matcher"]
+    C --> D["🔍 Gap Analyzer"]
+    D --> E["🚀 Training Recommender"]
+    E --> F["🧪 Career Simulator"]
+```
+
+| Agent | What it does |
+|---|---|
+| 👤 **Profile Agent** | Gemini reads your input and pulls out name, education, skills, experience, location and interests. Skills are normalized (`JS` becomes `JavaScript`, `K8s` becomes `Kubernetes`). |
+| 💼 **Job Matcher** | Sentence-Transformers embeddings compare your skills to each job. Score = **80% required + 20% nice-to-have skills**. |
+| 🔍 **Gap Analyzer** | Sorts every skill into **Matched**, **Partial** or **Missing**, then Gemini writes a short, fact-only explanation. |
+| 🚀 **Recommender** | Finds courses that close your gaps and ranks them by jobs unlocked, score gain and duration. |
+| 🧪 **Simulator** | Try "what if I learn X?" and see before-vs-after matches, cost, weeks needed and newly unlocked jobs. |
+
+---
+
+## 🌟 Highlights
+
+- 🖼️ **Multimodal input**: free text, voice, PDF/TXT and scanned resume images
+- 🌐 **Live jobs**: `refresh_jobs.py` pulls real postings from Adzuna (India) and Gemini extracts the skills from each one
+- 🔮 **4 / 8 / 12 week outlook**: see how your matches improve as you keep learning
+- 🧭 **Best path finder**: the best skills to learn within your time and budget
+- 🛡️ **Resilient by design**: Gemini calls retry automatically and fall back to backup models when a model is overloaded
+- ⚡ **Works offline for text**: no Gemini key? Text input still works with built-in keyword extraction
+- 🎬 **One-click demo profiles**: Backend Engineer, Data Analyst, Embedded / IoT, UI/UX Designer
+
+---
+
+## 📁 Project Structure
 
 ```
 skillGapChatbot/
 ├── app/
-│   ├── config.py           # Central configuration constants and thresholds
-│   ├── llm.py              # Centralized Gemini API calls and offline fallback
-│   ├── profile_agent.py    # Profile parsing and skill taxonomy normalization
-│   ├── matcher.py          # Embedding-based job matching and scoring
-│   ├── gap_agent.py        # Gap analysis and LLM explanation generation
-│   ├── recommender.py      # Course matching, score simulation, and ROI ranking
-│   └── graph.py            # LangGraph state machine orchestrator
+│   ├── config.py            # Thresholds, model names, constants
+│   ├── llm.py               # Gemini calls with retry and fallback
+│   ├── profile_agent.py     # Profile parsing and skill normalization
+│   ├── matcher.py           # Embedding-based job matching
+│   ├── gap_agent.py         # Gap analysis and explanations
+│   ├── recommender.py       # Course matching and ROI ranking
+│   ├── simulator.py         # Scenario simulation and best path search
+│   ├── simulator_ui.py      # Simulator interface
+│   ├── live_jobs.py         # Adzuna fetching and skill extraction
+│   └── graph.py             # LangGraph pipeline
 ├── data/
-│   ├── jobs.json           # 40 sample job postings across fields and cities
-│   ├── courses.json        # 41 verified courses (Coursera, NPTEL, Skill India)
-│   └── skills_taxonomy.json # 150+ synonym mappings for skill normalization
+│   ├── jobs.json            # Job postings
+│   ├── courses.json         # NPTEL, Coursera, Skill India courses
+│   ├── skills_taxonomy.json # Synonym mappings
+│   └── skills_vocab.json    # Skill vocabulary
 ├── tests/
-│   ├── test_profiles.json  # 10 benchmark candidate profiles with ground truth
-│   ├── evaluate.py         # Accuracy, Top-3 hit rate, and course coverage checks
-│   └── test_pipeline.py    # End-to-end LangGraph pipeline integration test
-├── main.py                 # Streamlit web application
-├── requirements.txt        # Python package dependencies
-├── .env.example            # Environment variables template
-└── README.md               # Documentation and usage guide
+│   ├── test_profiles.json   # Benchmark profiles
+│   ├── evaluate.py          # Accuracy and coverage checks
+│   └── test_pipeline.py     # End-to-end test
+├── main.py                  # Streamlit app
+├── refresh_jobs.py          # Refresh jobs from Adzuna
+├── requirements.txt
+└── .env.example
 ```
 
 ---
 
-## Setup and Installation
+## 🚀 Quick Start
 
-### 1. Prerequisites
-- Python 3.10+ (Tested on Python 3.11)
-- Git (optional)
-
-### 2. Clone or Navigate to Directory
-```bash
-cd skillGapChatbot
-```
-
-### 3. Create and Activate Virtual Environment
-Using standard Python `venv`:
+**1. Create and activate a virtual environment**
 ```bash
 python -m venv .venv
-# On Windows PowerShell:
+# Windows PowerShell
 .venv\Scripts\Activate.ps1
-# On Linux / macOS:
+# Linux / macOS
 source .venv/bin/activate
 ```
 
-Or using `uv`:
-```bash
-uv venv .venv --python 3.11
-.venv\Scripts\Activate.ps1
-```
-
-### 4. Install Dependencies
+**2. Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. Configure API Key
-Copy the `.env.example` file to `.env`:
+**3. Add your API keys**
 ```bash
 cp .env.example .env
 ```
-Open `.env` and add your Google Gemini API key:
 ```env
-GEMINI_API_KEY=your_actual_gemini_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+ADZUNA_APP_ID=your_adzuna_app_id_here
+ADZUNA_APP_KEY=your_adzuna_app_key_here
 ```
-*(Note: If no API key is provided, the agent will seamlessly use built-in keyword-and-taxonomy extraction and template-based factual gap summaries).*
 
----
+> 🔒 Never commit `.env`. It is already in `.gitignore`.
+> `GEMINI_API_KEY` powers voice, image and LLM explanations. The Adzuna keys are only needed to refresh jobs.
 
-## Running the Application
-
-Launch the Streamlit web dashboard:
+**4. Run the app**
 ```bash
 streamlit run main.py
 ```
-Open your browser at `http://localhost:8501`.
+Open **http://localhost:8501** and click a demo profile to try it.
 
 ---
 
-## Running the Tests and Evaluation Suite
+## 🔄 Refresh Job Data
 
-### 1. Run the Evaluation Benchmark
-Measures direct skill-matching accuracy, Top-3 job recommendation hit rate across 10 distinct domains, and semantic integrity of course skill coverage:
 ```bash
-python tests/evaluate.py
+python refresh_jobs.py
+```
+Fetches current postings, extracts skills with Gemini and saves them to `data/jobs.json`. The old file is backed up first. Restart the app afterwards.
+
+---
+
+## ✅ Tests
+
+```bash
+python tests/evaluate.py       # matching accuracy and course coverage
+python tests/test_pipeline.py  # full pipeline end to end
 ```
 
-### 2. Run the End-to-End Pipeline Integration Test
-Verifies the full LangGraph pipeline from raw text input through all 4 agents:
-```bash
-python tests/test_pipeline.py
-```
+---
 
+## 🛠️ Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| `503 UNAVAILABLE: high demand` on image or voice scan | Gemini is overloaded. The app retries and switches to backup models on its own. If it still fails, wait a few minutes or use the **Free Text** or **Document** tab. |
+| Blank profile after an image scan | The image couldn't be read. Try a clearer image or paste the text under **Free Text**. |
+| Backup models fail | Edit `GEMINI_FALLBACK_MODELS` in `app/config.py`. |
